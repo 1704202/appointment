@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../static/layui/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../static/layui/style/admin.css" media="all">
+    <link rel="stylesheet" href="../static/zui/js/zui.min.css">
+    <link rel="stylesheet" href="../static/zui/datetimepicker/datetimepicker.css">
+
+    <script type="text/javascript" src="../static/jquery/jquery.min.js"></script>
+    <script src="../static/layui/layui/layui.js"></script>
+    <script src="../static/zui/js/zui.min.js"></script>
+    <script src="../static/zui/datetimepicker/datetimepicker.js"></script>
+    <script src="../static/action/action.js"></script>
+    <style>
+        body{
+            margin: 0px;
+            padding: 10px;
+        }
+
+        .time-schedule .layui-form-item{
+            margin-bottom: 30px;
+        }
+
+        .time-schedule .layui-form-item .layui-form-label{
+            width: 80px;
+            text-align: left;
+            padding: 9px 0px;
+        }
+
+        .time-schedule .layui-form-item .layui-input-block{
+            margin-left: 90px;
+        }
+    </style>
+</head>
+<body class="time-schedule">
+<div class="layui-form-item">
+    <label class="layui-form-label">预约事项</label>
+    <div class="layui-input-block">
+        <textarea name="detail" placeholder="请输入预约事项" autocomplete="off" class="layui-textarea"></textarea>
+    </div>
+</div>
+<div class="layui-form-item" style="text-align: center;">
+    <button id="submit-button" type="button" class="layui-btn" style="width: 200px;">保存</button>
+</div>
+</body>
+<script>
+    layui.config({
+        base: '../static/layui/' //静态资源所在路径
+    }).extend({
+        index: '../layui/lib/index' //主入口模块
+    }).use('index', function () {
+        $('#submit-button').on('click', function(){
+            var detail = $('textarea[name=detail]').val();
+            if(detail == ''){
+                layer.msg('请输入预约事项信息！', {icon: 2});
+            }else{
+                var pageIndex = layer.load(3);
+                $.post('../time/submit', {detail: detail, tid: parent.table.checkStatus('table').data[0].tid}, function (res) {
+                    layer.close(pageIndex);
+                    if(res.code == 0){
+                        layer.msg(res.data, {icon: 1}, function () {
+                            parent.layer.close(parent.pageIndex);
+                            parent.table.reload("table");
+                        });
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                });
+            }
+        });
+    });
+</script>
+</html>

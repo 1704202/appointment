@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>预约</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../static/layui/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../static/layui/style/admin.css" media="all">
+
+    <script type="text/javascript" src="../static/jquery/jquery.min.js"></script>
+    <script src="../static/layui/layui/layui.js"></script>
+    <script src="../static/action/action.js"></script>
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .bg-img{
+            position: absolute;
+            width: 100%;
+            height: calc(100%);
+        }
+
+        .login-container{
+            position: absolute;
+            top: calc(50% - 170px);
+            left: calc(50% - 200px);
+            border: 2px solid #2e3f5d;
+            background: rgba(36, 46, 53, 0.8);
+            color: #3250bb;
+            border-radius: 10px;
+            width: 380px;
+            height: 320px;
+            padding: 10px;
+        }
+
+        .login-container .layui-form-item{
+            margin-bottom: 30px;
+        }
+
+        .login-container .layui-form-item .layui-form-label, .registe-container .layui-form-item .layui-form-label{
+            width: 40px;
+            text-align: left;
+            padding: 9px 0px;
+        }
+
+        .login-container .layui-form-item .layui-input-block, .registe-container .layui-form-item .layui-input-block{
+            margin-left: 50px;
+        }
+
+        .registe-container{
+            position: absolute;
+            top: calc(50% - 270px);
+            left: calc(50% - 200px);
+            border: 2px solid #2e3f5d;
+            background: rgba(36, 46, 53, 0.8);
+            color: #3250bb;
+            border-radius: 10px;
+            width: 380px;
+            height: 520px;
+            padding: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <img class="bg-img" src="../static/images/page_login_bg.jpg">
+    <div class="login-container">
+        <div class="layui-form-item" style="font-size: 20px; text-align: center;">
+            用户登录
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">账户</label>
+            <div class="layui-input-block">
+                <input type="text" name="user_account" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="user_password" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="text-align: center;">
+            <div id="login-button" style="display: inline-block; width: 60px; height: 60px; border-radius: 50%; background: #4c6bde; cursor: pointer">
+                <img src="../static/images/login_submit.png" style="width: 40px; height: 40px; margin: 10px;">
+            </div>
+        </div>
+        <div id="show-registe-button" class="layui-form-item" style="text-align: right; font-size: 14px; color: white; cursor: pointer;">
+            Registe
+        </div>
+    </div>
+
+    <div class="registe-container">
+        <div class="layui-form-item" style="font-size: 20px; text-align: center;">
+            用户注册
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">账户</label>
+            <div class="layui-input-block">
+                <input type="text" name="user_account" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="user_password" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认</label>
+            <div class="layui-input-block">
+                <input type="password" name="confirm_password" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="user_name" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">年龄</label>
+            <div class="layui-input-block">
+                <input type="text" name="user_age" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <select name="user_sex" style="width: 60px; height: 38px; border: 1px solid #D2D2D2 !important; border-radius: 2px;">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <select name="user_position" style="width: 60px; height: 38px; border: 1px solid #D2D2D2 !important; border-radius: 2px;">
+                    <option value="0">学生</option>
+                    <option value="1">老师</option>
+                    <option value="2">教授</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" style="text-align: center;">
+            <div id="registe-button" style="display: inline-block; width: 60px; height: 60px; border-radius: 50%; background: #4c6bde; cursor: pointer">
+                <img src="../static/images/login_submit.png" style="width: 40px; height: 40px; margin: 10px;">
+            </div>
+        </div>
+        <div id="show-login-button" class="layui-form-item" style="text-align: right; font-size: 14px; color: white; cursor: pointer;">
+            Login
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    var pageIndex;
+    layui.config({
+        base: '../static/layui/' //静态资源所在路径
+    }).extend({
+        index: '../layui/lib/index' //主入口模块
+    }).use('index', function () {
+        $('#login-button').on('click', function () {
+            var user_account = $('.login-container input[name=user_account]').val();
+            var user_password = $('.login-container input[name=user_password]').val();
+            if(user_account == '' || user_password == ''){
+                pageIndex = layer.msg("请输入用户信息！", {icon: 2});
+            }else{
+                pageIndex = layer.load(3);
+                $.post('../user/login', {user_account: user_account, user_password: user_password}, function (res) {
+                    layer.close(pageIndex);
+                    if(res.code == 0){
+                        pageIndex = layer.msg("登录成功！", {icon: 1}, function () {
+                            location.href = 'index.html';
+                        });
+                    }else{
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                })
+            }
+        });
+
+        $('#registe-button').on('click', function () {
+            var user_account = $('.registe-container input[name=user_account]').val();
+            var user_password = $('.registe-container input[name=user_password]').val();
+            var confirm_password = $('.registe-container input[name=confirm_password]').val();
+            var user_name = $('.registe-container input[name=user_name]').val();
+            var user_age = $('.registe-container input[name=user_age]').val();
+            var user_sex = $('.registe-container select[name=user_sex]').val();
+            var user_position = $('.registe-container select[name=user_position]').val();
+
+            if(user_account == '' || user_password == '' || confirm_password == '' || user_name == '' ||
+            user_age == '' || user_sex == '' || user_position == ''){
+                pageIndex = layer.msg("请输入用户信息！", {icon: 2});
+            }else if(confirm_password != user_password){
+                pageIndex = layer.msg("两次密码输入不一致！", {icon: 2});
+            }else{
+                pageIndex = layer.load(3);
+                var params = {
+                    user_account: user_account,
+                    user_password: user_password,
+                    user_name: user_name,
+                    user_age: user_age,
+                    user_sex: user_sex,
+                    user_position: user_position};
+                $.action('../user/registe', JSON.stringify(params), function (res) {
+                    layer.close(pageIndex);
+                    if(res.code == 0){
+                        pageIndex = layer.msg(res.data, {icon: 1}, function(){
+                            $('.registe-container').fadeOut('slow', function () {
+                                $('.login-container').fadeIn();
+                            });
+                        });
+                    }else{
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                });
+            }
+        });
+
+        $('#show-registe-button').on('click', function(){
+            $('.login-container').fadeOut('slow', function () {
+               $('.registe-container').fadeIn();
+            });
+        });
+
+        $('#show-login-button').on('click', function(){
+            $('.registe-container').fadeOut('slow', function () {
+                $('.login-container').fadeIn();
+            });
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>预约系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../static/layui/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../static/layui/style/admin.css" media="all">
+
+    <script type="text/javascript" src="../static/jquery/jquery.min.js"></script>
+    <script src="../static/layui/layui/layui.js"></script>
+</head>
+<body class="layui-layout-body" layadmin-themealias="default">
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <!-- 侧边菜单 -->
+        <div class="layui-side layui-side-menu">
+            <div class="layui-side-scroll">
+                <div class="layui-logo" lay-href="index.html">
+                    <span>预约系统</span>
+                </div>
+
+                <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
+                    lay-filter="layadmin-system-side-menu">
+                    <li data-name="time" class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;" lay-tips="预约管理">
+                            <i class="layui-icon layui-icon-app"></i>
+                            <cite>预约管理</cite>
+                            <span class="layui-nav-more"></span></a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="file" class="layui-this">
+                                <a lay-href="list_time.html">预约列表</a>
+                            </dd>
+                        </dl>
+                        <dl class="layui-nav-child mytime">
+                            <dd data-name="file">
+                                <a lay-href="list_mytime.html">我的预约</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li data-name="user" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="用户管理">
+                            <i class="layui-icon layui-icon-username"></i>
+                            <cite>用户管理</cite>
+                            <span class="layui-nav-more"></span></a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="user">
+                                <a lay-href="list_student.html">学生列表</a>
+                            </dd>
+                        </dl>
+                        <dl class="layui-nav-child teacher">
+                            <dd data-name="user">
+                                <a lay-href="list_teacher.html">教师列表</a>
+                            </dd>
+                        </dl>
+                        <dl class="layui-nav-child profession">
+                            <dd data-name="user">
+                                <a lay-href="list_profession.html">教授列表</a>
+                            </dd>
+                        </dl>
+                    </li>
+
+                    <span class="layui-nav-bar" style="top: 28px; height: 0px; opacity: 0;"></span></ul>
+            </div>
+        </div>
+
+        <!-- 页面标签 -->
+        <div class="layadmin-pagetabs" id="LAY_app_tabs">
+            <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+                    <li class="layui-nav-item" lay-unselect="">
+                        <a href="javascript:;"><span class="layui-nav-more"></span></a>
+                        <dl class="layui-nav-child layui-anim-fadein">
+                            <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+                            <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+                            <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+                        </dl>
+                    </li>
+                    <span class="layui-nav-bar"></span></ul>
+            </div>
+            <div class="layui-tab" lay-unauto="" lay-allowclose="true" lay-filter="layadmin-layout-tabs">
+                <ul class="layui-tab-title" id="LAY_app_tabsheader">
+                    <li lay-id="home/console.html" lay-attr="home/console.html" class="layui-this"><i
+                            class="layui-icon layui-icon-home"></i><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- 主体内容 -->
+        <div class="layui-body" id="LAY_app_body">
+            <div class="layadmin-tabsbody-item layui-show">
+                <iframe src="list_time.html" frameborder="0" class="layadmin-iframe"></iframe>
+            </div>
+        </div>
+
+        <!-- 辅助元素，一般用于移动设备下遮罩 -->
+        <div class="layadmin-body-shade" layadmin-event="shade"></div>
+    </div>
+</div>
+<div id="qb-sougou-search" style="display: none; opacity: 0;">
+    <p>搜索</p>
+    <p class="last-btn">复制</p>
+    <iframe src=""></iframe>
+</div>
+</body>
+<script type="text/javascript">
+    var user_position;
+
+	layui.config({
+		base: '../static/layui/' //静态资源所在路径
+	}).extend({
+		index: '../layui/lib/index' //主入口模块
+	}).use('index', function () {
+	    $.get('../user/getPosition', {}, function (res) {
+            if(res.code == 0){
+                user_position = res.data;
+                switch (user_position) {
+                    case 0:
+                        $('#LAY-system-side-menu li[data-name=user]').hide();
+                        break;
+                    case 1:
+                        $('#LAY-system-side-menu li[data-name=time] .mytime, #LAY-system-side-menu li[data-name=user] .teacher, #LAY-system-side-menu li[data-name=user] .profession').hide();
+                        break;
+                    case 2:
+                        $('#LAY-system-side-menu li[data-name=time] .mytime, #LAY-system-side-menu li[data-name=user] .profession').hide();
+                        break;
+                    default:
+                        $('#LAY-system-side-menu li[data-name=time] .mytime').hide();
+                        break;
+                }
+            }
+        });
+	});
+</script>
+</html>

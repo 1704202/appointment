@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.appointment.dao.TimeDao">
+    <insert id="insertTime" parameterType="com.example.appointment.entity.TimeBean">
+        insert into tb_time(tid, user_id, address, starttime, endtime)
+        values(#{time.tid}, #{time.user_id}, #{time.address}, str_to_date(#{time.starttime}, '%Y-%m-%d %H:%i:%s'), str_to_date(#{time.endtime}, '%Y-%m-%d %H:%i:%s'))
+    </insert>
+
+    <select id="queryTime" resultType="com.example.appointment.entity.TimeBean">
+        select tid, user_id, address, date_format(starttime, '%Y-%m-%d %H:%i:%s') as starttime, date_format(endtime, '%Y-%m-%d %H:%i:%s') as endtime,
+        schedule, schedule_user, detail from tb_time
+        <where>
+            <if test="tid != null">
+                tid = #{tid}
+            </if>
+            <if test="user_id != null">
+               and user_id = #{user_id}
+            </if>
+            <if test="schedule != '-1'">
+                and schedule = #{schedule}
+            </if>
+            <if test="starttime != null">
+                and str_to_date(#{starttime}, '%Y-%m-%d %H:%i:%s') <![CDATA[ >= ]]> starttime
+            </if>
+            <if test="endtime != null">
+                and str_to_date(#{endtime}, '%Y-%m-%d %H:%i:%s') <![CDATA[ <= ]]> endtime
+            </if>
+            <if test="schedule_user != null">
+                and schedule_user = #{schedule_user}
+            </if>
+        </where>
+
+        order by starttime desc
+    </select>
+    
+    <update id="updateById">
+        update tb_time
+        <set>
+            <if test="address != null">
+                address = #{address},
+            </if>
+
+            <if test="starttime != null">
+                starttime = str_to_date(#{starttime}, '%Y-%m-%d %H:%i:%s'),
+            </if>
+
+            <if test="endtime != null">
+                endtime = str_to_date(#{endtime}, '%Y-%m-%d %H:%i:%s'),
+            </if>
+
+            <if test="schedule != '-1'">
+                schedule = #{schedule},
+            </if>
+
+            <if test="schedule_user != null">
+                schedule_user = #{schedule_user},
+            </if>
+
+            <if test="detail != null">
+                detail = #{detail},
+            </if>
+        </set>
+        where tid = #{tid}
+    </update>
+
+    <delete id="deleteById">
+        delete from tb_time where tid = #{tid}
+    </delete>
+
+    <delete id="deleteByIdList" parameterType="java.util.List">
+        delete from tb_time where tid in
+        <foreach collection="list" open="(" close=")" index="index" item="item" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>
